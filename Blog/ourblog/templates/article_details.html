@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+
+<h1>{{ post.title }}</h1>
+<small>By: {{ post.author.first_name }} 
+    {{ post.author.last_name }} - 
+    Created on: {{ post.post_date }} - 
+    {% if post.update_date and post.update_date != post.created_date %}
+        Updated on: {{ post.update_date }} -
+    {% endif %}
+    
+    <a href="{% url 'update_post' post.pk %}">(Edit)</a>
+
+    <a href="{% url 'delete_post' post.pk %}">(Delete)</a>
+
+</small><br/>
+<hr>
+<br/>
+
+{% if post.post_video %}
+<video class="embed-responsive embed-responsive-16by9" controls="controls">
+    <source src="{{ post.post_video.url }}" type="video/mp4" allowfullscreen/>
+</video>
+<br/><br/>
+{% endif %}
+
+
+
+{% if post.post_image %}
+    <img src="{{ post.post_image.url }}">
+<br/><br/>
+{% endif %}
+
+
+{{ post.body }}
+
+<br/><br/>
+<a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
+<br/><br/><br/><br/>
+
+{% endblock %}
